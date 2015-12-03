@@ -9,10 +9,11 @@ import sys
 
 class MsgGenClient(asyncio.Protocol):
     def connection_made(self, transport):
+        print("Connected")
         self.is_closed = False
         self.transport = transport
 
-    def data_recieved(self, data):
+    def data_received(self, data):
         print(data)
   
     def connection_lost(self, exc):
@@ -22,7 +23,7 @@ class MsgGenClient(asyncio.Protocol):
 
 
 loop = asyncio.get_event_loop()
-coro = loop.create_connection(MsgGenClient, '127.0.0.1', 2000)
+coro = loop.create_connection(MsgGenClient, 'localhost', 2000)
 server = asyncio.async(coro)
 
 
@@ -31,6 +32,5 @@ try:
 except KeyboardInterrupt:
     print("exit")
 finally:
-    server.close()
     loop.close()
 
