@@ -39,7 +39,9 @@ def message(std_id, data):
 def send_message(protocol):
     i = 0
     if not protocol.is_closed:
-        protocol.transport.write(b"test\r\n")
+        m = message(i+100, i.to_bytes(4, "little"))
+        print (m)
+        protocol.transport.write(m)
         ++i
         yield from asyncio.sleep(1)
         yield from send_message(protocol)
